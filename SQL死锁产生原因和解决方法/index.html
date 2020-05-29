@@ -340,49 +340,49 @@
       
         <h2 id="死锁现象"><a href="#死锁现象" class="headerlink" title="死锁现象"></a>死锁现象</h2><p><strong>表现一</strong>：一个用户A 访问表A(锁住了表A)，然后又访问表B，另一个用户B 访问表B(锁住了表B)，然后企图访问表A，这时用户A由于用户B已经锁住表B，它必须等待用户B释放表B，才能继续，好了他老人家就只好老老实实在这等了，同样用户B要等用户A释放表A才能继续这就死锁了。</p>
 <ul>
-<li>解决方法<br>这种死锁是由于你的程序的BUG产生的，除了调整你的程序的逻辑别无他法<br>　　仔细分析你程序的逻辑：<br>　　1：尽量避免同时锁定两个资源<br>　　2: 必须同时锁定两个资源时，要保证在任何时刻都应该按照相同的顺序来锁定资源.<a id="more"></a></li>
+<li>解决方法<br>这种死锁是由于你的程序的BUG产生的，除了调整你的程序的逻辑别无他法<br>　　仔细分析你程序的逻辑：<br>　　1：尽量避免同时锁定两个资源<br>　　2: 必须同时锁定两个资源时，要保证在任何时刻都应该按照相同的顺序来锁定资源.<a id="more"></a>
+<strong>表现二</strong>：用户A读一条纪录，然后修改该条纪录。这时用户B修改该条纪录，这里用户A的事务里锁的性质由共享锁企图上升到独占锁(for update),而用户B里的独占锁由于A有共享锁存在所以必须等A释放掉共享锁，而A由于B的独占锁而无法上升的独占锁也就不可能释放共享锁，于是出现了死锁。<br>　　这种死锁比较隐蔽，但其实在稍大点的项目中经常发生。其实这种死锁也可以叫做书签查找所引起的。<img src="/SQL%E6%AD%BB%E9%94%81%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/2020-03-13-21-00-04.png" class>
+解决方法：<br>　　让用户A的事务（即先读后写类型的操作),在select 时就是用Update lock</li>
 </ul>
-<p><strong>表现二</strong>：用户A读一条纪录，然后修改该条纪录。这时用户B修改该条纪录，这里用户A的事务里锁的性质由共享锁企图上升到独占锁(for update),而用户B里的独占锁由于A有共享锁存在所以必须等A释放掉共享锁，而A由于B的独占锁而无法上升的独占锁也就不可能释放共享锁，于是出现了死锁。<br>　　这种死锁比较隐蔽，但其实在稍大点的项目中经常发生。其实这种死锁也可以叫做书签查找所引起的。</p>
-<img src="/SQL%E6%AD%BB%E9%94%81%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/2020-03-13-21-00-04.png" class>
-<p>解决方法：<br>　　让用户A的事务（即先读后写类型的操作),在select 时就是用Update lock</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table1 <span class="keyword">with</span>(updlock) <span class="keyword">where</span> ....</span><br></pre></td></tr></table></figure>
-
 <p>死锁，简而言之，两个或者多个trans，同时请求对方正在请求的某个对象，导致双方互相等待。简单的例子如下：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="left">trans1</th>
-<th align="left">trans2</th>
+<th style="text-align:left">trans1</th>
+<th style="text-align:left">trans2</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="left">1.IDBConnection.BeginTransaction</td>
-<td align="left">2.IDBConnection.BeginTransaction</td>
+<tbody>
+<tr>
+<td style="text-align:left">1.IDBConnection.BeginTransaction</td>
+<td style="text-align:left">2.IDBConnection.BeginTransaction</td>
 </tr>
 <tr>
-<td align="left">2.update table A</td>
-<td align="left">2.update table B</td>
+<td style="text-align:left">2.update table A</td>
+<td style="text-align:left">2.update table B</td>
 </tr>
 <tr>
-<td align="left"><font color="#FF0000"> 3.update table B </font></td>
-<td align="left"><font color="#FF0000"> 3.update table A </font></td>
+<td style="text-align:left"><font color="#FF0000"> 3.update table B </font></td>
+<td style="text-align:left"><font color="#FF0000"> 3.update table A </font></td>
 </tr>
 <tr>
-<td align="left"><font color="#FF0000"> 4.IDBConnection.Commit </font></td>
-<td align="left"><font color="#FF0000"> 4.IDBConnection.Commit </font></td>
+<td style="text-align:left"><font color="#FF0000"> 4.IDBConnection.Commit </font></td>
+<td style="text-align:left"><font color="#FF0000"> 4.IDBConnection.Commit </font></td>
 </tr>
-</tbody></table>
-<p><font color="#FF0000"> 那么，很容易看到，如果trans1和trans2，分别到达了step3，那么trans1会请求对于B的X锁，trans2会请求对于A的X锁，而二者的锁在step2上已经被对方分别持有了。由于得不到锁，后面的Commit无法执行，这样双方开始死锁。 </font></p>
+</tbody>
+</table>
+</div>
+<font color="#FF0000"> 那么，很容易看到，如果trans1和trans2，分别到达了step3，那么trans1会请求对于B的X锁，trans2会请求对于A的X锁，而二者的锁在step2上已经被对方分别持有了。由于得不到锁，后面的Commit无法执行，这样双方开始死锁。 </font>
+
 <p> 好，我们看一个简单的例子，来解释一下，应该如何解决死锁问题。</p>
  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- Batch #1</span></span><br><span class="line"> <span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> deadlocktest</span><br><span class="line"> <span class="keyword">GO</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">USE</span> deadlocktest</span><br><span class="line"> <span class="keyword">SET</span> NOCOUNT <span class="keyword">ON</span></span><br><span class="line"> DBCC TRACEON (<span class="number">1222</span>, <span class="number">-1</span>)</span><br><span class="line"> <span class="comment">-- 在SQL2005中，增加了一个新的dbcc参数，就是1222，原来在2000下，我们知道，可以执行dbcc</span></span><br><span class="line"> <span class="comment">-- traceon(1204,3605,-1)看到所有的死锁信息。SqlServer 2005中，对于1204进行了增强，这就是1222。</span></span><br><span class="line"> <span class="keyword">GO</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">IF</span> OBJECT_ID (<span class="string">'t1'</span>) <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DROP</span> <span class="keyword">TABLE</span> t1</span><br><span class="line"> <span class="keyword">IF</span> OBJECT_ID (<span class="string">'p1'</span>) <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DROP</span> PROC p1</span><br><span class="line"> <span class="keyword">IF</span> OBJECT_ID (<span class="string">'p2'</span>) <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DROP</span> PROC p2</span><br><span class="line"> <span class="keyword">GO</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> t1 (c1 <span class="built_in">int</span>, c2 <span class="built_in">int</span>, c3 <span class="built_in">int</span>, c4 <span class="built_in">char</span>(<span class="number">5000</span>))</span><br><span class="line"> <span class="keyword">GO</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">DECLARE</span> @x <span class="built_in">int</span></span><br><span class="line"> <span class="keyword">SET</span> @x = <span class="number">1</span></span><br><span class="line"> <span class="keyword">WHILE</span> (@x &lt;= <span class="number">1000</span>) <span class="keyword">BEGIN</span></span><br><span class="line">          <span class="keyword">INSERT</span> <span class="keyword">INTO</span> t1 <span class="keyword">VALUES</span> (@x*<span class="number">2</span>, @x*<span class="number">2</span>, @x*<span class="number">2</span>, @x*<span class="number">2</span>)</span><br><span class="line">          <span class="keyword">SET</span> @x = @x + <span class="number">1</span></span><br><span class="line"> <span class="keyword">END</span></span><br><span class="line"> <span class="keyword">GO</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">CREATE</span> CLUSTERED <span class="keyword">INDEX</span> cidx <span class="keyword">ON</span> t1 (c1)</span><br><span class="line"> <span class="keyword">CREATE</span> NONCLUSTERED <span class="keyword">INDEX</span> idx1 <span class="keyword">ON</span> t1 (c2)</span><br><span class="line"> <span class="keyword">GO</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="keyword">CREATE</span> PROC p1 @p1 <span class="built_in">int</span> <span class="keyword">AS</span> <span class="keyword">SELECT</span> c2, c3 <span class="keyword">FROM</span> t1 <span class="keyword">WHERE</span> c2 <span class="keyword">BETWEEN</span> @p1 <span class="keyword">AND</span> @p1+<span class="number">1</span></span><br><span class="line"> <span class="keyword">GO</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="keyword">CREATE</span> PROC p2 @p1 <span class="built_in">int</span> <span class="keyword">AS</span></span><br><span class="line">          <span class="keyword">UPDATE</span> t1 <span class="keyword">SET</span> c2 = c2+<span class="number">1</span> <span class="keyword">WHERE</span> c1 = @p1</span><br><span class="line">          <span class="keyword">UPDATE</span> t1 <span class="keyword">SET</span> c2 = c2<span class="number">-1</span> <span class="keyword">WHERE</span> c1 = @p1</span><br><span class="line"> <span class="keyword">GO</span></span><br></pre></td></tr></table></figure>
-
 <p>上述sql创建一个deadlock的示范数据库，插入了1000条数据，并在表t1上建立了c1列的聚集索引，和c2列的非聚集索引。另外创建了两个sp，分别是从t1中select数据和update数据。</p>
 <p>   好，打开一个新的查询窗口，我们开始执行下面的query：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- Batch #2</span></span><br><span class="line">  <span class="keyword">USE</span> deadlocktest</span><br><span class="line">  <span class="keyword">SET</span> NOCOUNT <span class="keyword">ON</span></span><br><span class="line">  <span class="keyword">WHILE</span> (<span class="number">1</span>=<span class="number">1</span>) EXEC p2 <span class="number">4</span></span><br><span class="line">  <span class="keyword">GO</span></span><br></pre></td></tr></table></figure>
-
 <p>  开始执行后，然后我们打开第三个查询窗口，执行下面的query：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- Batch #3</span></span><br><span class="line"><span class="keyword">USE</span> deadlocktest</span><br><span class="line"><span class="keyword">SET</span> NOCOUNT <span class="keyword">ON</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="comment">#t1 (c2 int, c3 int)</span></span><br><span class="line"><span class="keyword">GO</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">WHILE</span> (<span class="number">1</span>=<span class="number">1</span>) <span class="keyword">BEGIN</span></span><br><span class="line">          <span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="comment">#t1 EXEC p1 4</span></span><br><span class="line">          <span class="keyword">TRUNCATE</span> <span class="keyword">TABLE</span> <span class="comment">#t1</span></span><br><span class="line"><span class="keyword">END</span></span><br><span class="line"><span class="keyword">GO</span></span><br></pre></td></tr></table></figure>
-
 <p> 开始执行，哈哈，很快，我们看到了这样的错误信息<br> Msg 1205, Level 13, State 51, Procedure p1, Line 4<br>   Transaction (Process ID 54) was deadlocked on lock resources with another process and has been chosen as the deadlock victim. Rerun the transaction.</p>
 <p>pid54发现了死锁。<br>   那么，我们该如何解决它？</p>
 <p>   在SqlServer 2005中，我们可以这么做：</p>
@@ -395,22 +395,17 @@
 </ul>
 <p>为什么会死锁呢？再回顾一下两个sp的写法</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> PROC p1 @p1 <span class="built_in">int</span> <span class="keyword">AS</span></span><br><span class="line">      <span class="keyword">SELECT</span> c2, c3 <span class="keyword">FROM</span> t1 <span class="keyword">WHERE</span> c2 <span class="keyword">BETWEEN</span> @p1 <span class="keyword">AND</span> @p1+<span class="number">1</span></span><br><span class="line">   <span class="keyword">GO</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   <span class="keyword">CREATE</span> PROC p2 @p1 <span class="built_in">int</span> <span class="keyword">AS</span></span><br><span class="line">         <span class="keyword">UPDATE</span> t1 <span class="keyword">SET</span> c2 = c2+<span class="number">1</span> <span class="keyword">WHERE</span> c1 = @p1</span><br><span class="line">         <span class="keyword">UPDATE</span> t1 <span class="keyword">SET</span> c2 = c2<span class="number">-1</span> <span class="keyword">WHERE</span> c1 = @p1</span><br><span class="line">   <span class="keyword">GO</span></span><br></pre></td></tr></table></figure>
-
 <p>很奇怪吧！p1没有insert，没有delete，没有update，只是一个select，p2才是update。这个和我们前面说过的，trans1里面updata A，update B；trans2里面upate B，update A，根本不贴边啊！<br>   那么，什么导致了死锁？</p>
 <p>   需要从事件日志中，看sql的死锁信息:</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Spid X is running this query (line 2 of proc [p1], inputbuffer “… EXEC p1 4 …”):</span><br><span class="line">   <span class="keyword">SELECT</span> c2, c3 <span class="keyword">FROM</span> t1 <span class="keyword">WHERE</span> c2 <span class="keyword">BETWEEN</span> @p1 <span class="keyword">AND</span> @p1+<span class="number">1</span></span><br><span class="line">   Spid Y <span class="keyword">is</span> running this <span class="keyword">query</span> (line <span class="number">2</span> <span class="keyword">of</span> proc [p2], inputbuffer “EXEC p2 <span class="number">4</span>”):</span><br><span class="line">   <span class="keyword">UPDATE</span> t1 <span class="keyword">SET</span> c2 = c2+<span class="number">1</span> <span class="keyword">WHERE</span> c1 = @p1</span><br><span class="line"></span><br><span class="line">   The <span class="keyword">SELECT</span> <span class="keyword">is</span> waiting <span class="keyword">for</span> a <span class="keyword">Shared</span> <span class="keyword">KEY</span> <span class="keyword">lock</span> <span class="keyword">on</span> <span class="keyword">index</span> t1.cidx.  The <span class="keyword">UPDATE</span> holds a conflicting X lock.</span><br><span class="line">   The <span class="keyword">UPDATE</span> <span class="keyword">is</span> waiting <span class="keyword">for</span> an eXclusive <span class="keyword">KEY</span> <span class="keyword">lock</span> <span class="keyword">on</span> <span class="keyword">index</span> t1.idx1.  The <span class="keyword">SELECT</span> holds a conflicting S lock.</span><br></pre></td></tr></table></figure>
-
 <p>首先，我们看看p1的执行计划。怎么看呢？可以执行set statistics profile on，这句就可以了。下面是p1的执行计划</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> c2, c3 <span class="keyword">FROM</span> t1 <span class="keyword">WHERE</span> c2 <span class="keyword">BETWEEN</span> @p1 <span class="keyword">AND</span> @p1+<span class="number">1</span></span><br><span class="line">        <span class="keyword">Nested</span> Loops(<span class="keyword">Inner</span> <span class="keyword">Join</span>, <span class="keyword">OUTER</span> <span class="keyword">REFERENCES</span>:([Uniq1002], [t1].[c1]))</span><br><span class="line">               <span class="keyword">Index</span> Seek(<span class="keyword">OBJECT</span>:([t1].[idx1]), SEEK:([t1].[c2] &gt;= [@p1] <span class="keyword">AND</span> [t1].[c2] &lt;= [@p1]+(<span class="number">1</span>)) ORDERED FORWARD)</span><br><span class="line">                     Clustered <span class="keyword">Index</span> Seek(<span class="keyword">OBJECT</span>:([t1].[cidx]), SEEK:([t1].[c1]=[t1].[c1] <span class="keyword">AND</span> [Uniq1002]=[Uniq1002]) LOOKUP ORDERED FORWARD)</span><br></pre></td></tr></table></figure>
-
 <p>我们看到了一个nested loops，第一行，利用索引t1.c2来进行seek，seek出来的那个rowid，在第二行中，用来通过聚集索引来查找整行的数据。这是什么？就是bookmark lookup啊！为什么？因为我们需要的c2、c3不能完全的被索引t1.c1带出来，所以需要书签查找。<br>   好，我们接着看p2的执行计划。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> t1 <span class="keyword">SET</span> c2 = c2+<span class="number">1</span> <span class="keyword">WHERE</span> c1 = @p1</span><br><span class="line">         Clustered <span class="keyword">Index</span> <span class="keyword">Update</span>(<span class="keyword">OBJECT</span>:([t1].[cidx]), <span class="keyword">OBJECT</span>:([t1].[idx1]), <span class="keyword">SET</span>:([t1].[c2] = [Expr1004]))</span><br><span class="line">               <span class="keyword">Compute</span> Scalar(<span class="keyword">DEFINE</span>:([Expr1013]=[Expr1013]))</span><br><span class="line">                     <span class="keyword">Compute</span> Scalar(<span class="keyword">DEFINE</span>:([Expr1004]=[t1].[c2]+(<span class="number">1</span>), [Expr1013]=<span class="keyword">CASE</span> <span class="keyword">WHEN</span> <span class="keyword">CASE</span> <span class="keyword">WHEN</span> ...</span><br><span class="line">                           Top(ROWCOUNT est <span class="number">0</span>)</span><br><span class="line">                                 Clustered <span class="keyword">Index</span> Seek(<span class="keyword">OBJECT</span>:([t1].[cidx]), SEEK:([t1].[c1]=[@p1]) ORDERED FORWARD)</span><br></pre></td></tr></table></figure>
-
 <p>通过聚集索引的seek找到了一行，然后开始更新。这里注意的是，update的时候，它会申请一个针对clustered index的X锁的。</p>
 <p>   实际上到这里，我们就明白了为什么update会对select产生死锁。update的时候，会申请一个针对clustered index的X锁，这样就阻塞住了（注意，不是死锁！）select里面最后的那个clustered index seek。死锁的另一半在哪里呢？注意我们的select语句，c2存在于索引idx1中，c1是一个聚集索引cidx。问题就在这里！我们在p2中更新了c2这个值，所以sqlserver会自动更新包含c2列的非聚集索引：idx1。而idx1在哪里？就在我们刚才的select语句中。而对这个索引列的更改，意味着索引集合的某个行或者某些行，需要重新排列，而重新排列，需要一个X锁。<br>   SO………，问题就这样被发现了。</p>
 <p>   总结一下，就是说，某个query使用非聚集索引来select数据，那么它会在非聚集索引上持有一个S锁。当有一些select的列不在该索引上，它需要根据rowid找到对应的聚集索引的那行，然后找到其他数据。而此时，第二个的查询中，update正在聚集索引上忙乎：定位、加锁、修改等。但因为正在修改的某个列，是另外一个非聚集索引的某个列，所以此时，它需要同时更改那个非聚集索引的信息，这就需要在那个非聚集索引上，加第二个X锁。select开始等待update的X锁，update开始等待select的S锁，死锁，就这样发生鸟。<br>   那么，为什么我们增加了一个非聚集索引，死锁就消失鸟？我们看一下，按照上文中自动增加的索引之后的执行计划：</p>
    <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> c2, c3 <span class="keyword">FROM</span> t1 <span class="keyword">WHERE</span> c2 <span class="keyword">BETWEEN</span> @p1 <span class="keyword">AND</span> @p1+<span class="number">1</span></span><br><span class="line">   <span class="keyword">Index</span> Seek(<span class="keyword">OBJECT</span>:([deadlocktest].[dbo].[t1].[_dta_index_t1_7_2073058421__K2_K1_3]), SEEK:([deadlocktest].[dbo].[t1].[c2] &gt;= [@p1] <span class="keyword">AND</span> [deadlocktest].[dbo].[t1].[c2] &lt;= [@p1]+(<span class="number">1</span>)) ORDERED FORWARD)</span><br></pre></td></tr></table></figure>
-
 <p>哦，对于clustered index的需求没有了，因为增加的覆盖索引已经足够把所有的信息都select出来。就这么简单。</p>
 <p>   实际上，在sqlserver 2005中，如果用profiler来抓eventid：1222，那么会出现一个死锁的图，很直观的说。</p>
 <p>   下面的方法，有助于将死锁减至最少（详细情况，请看SQLServer联机帮助，搜索：将死锁减至最少即可。</p>
@@ -796,19 +791,19 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CSS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CSS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -969,5 +964,21 @@ MathJax.Hub.Queue(function() {
 
 </div>
   </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>

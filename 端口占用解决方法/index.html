@@ -317,7 +317,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">222字</span>
+        <span class="post-count">221字</span>
       </span>
     </span>
 
@@ -340,15 +340,10 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>遇到端口被占用问题是有一次服务器重启了，然后nginx没有设为开机自动启动，导致有些在线程序崩掉后才发现的。当尝试再次启动nginx时，发现nginx死活启动不起来。所以就怀疑是有其他进程占用了80端口。所以带着问题尝试去解决。本次实验是在win系统下进行的。<br>首先使用netstat -ano 命令查看是哪个进程正在占用80端口</p>
-<a id="more"></a>
-<img src="/%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/2020-05-20-20-45-01.png" class>
-<p>PID为4的进程正在占用80端口。尝试用taskkill指令杀死此进程，确发现此为system进程，无法直接结束进程。<br>使用netsh命令查看http端口使用状态</p>
+        <p>遇到端口被占用问题是有一次服务器重启了，然后nginx没有设为开机自动启动，导致有些在线程序崩掉后才发现的。当尝试再次启动nginx时，发现nginx死活启动不起来。所以就怀疑是有其他进程占用了80端口。所以带着问题尝试去解决。本次实验是在win系统下进行的。<br>首先使用netstat -ano 命令查看是哪个进程正在占用80端口<br><a id="more"></a><br><img src="/%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/2020-05-20-20-45-01.png" class><br>PID为4的进程正在占用80端口。尝试用taskkill指令杀死此进程，确发现此为system进程，无法直接结束进程。<br>使用netsh命令查看http端口使用状态</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh http show servicetstate</span><br></pre></td></tr></table></figure>
-
 <img src="/%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/2020-05-20-20-47-30.png" class>
 <img src="/%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/2020-05-20-20-48-48.png" class>
-
 <p>然后在任务管理器中查找该线程id,并将其关闭</p>
 <p>然后就可以重新启动nginx了 启动命令为</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx start</span><br></pre></td></tr></table></figure>
@@ -724,19 +719,19 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CSS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CSS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -897,5 +892,21 @@ MathJax.Hub.Queue(function() {
 
 </div>
   </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>

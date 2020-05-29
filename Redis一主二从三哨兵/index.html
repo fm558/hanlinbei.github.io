@@ -350,62 +350,38 @@
       
         <p>本文简单讲述主从建立和哨兵的配置。本机测试redis为Redis-x64-3.2.100<a href="https://github.com/MicrosoftArchive/redis/releases" target="_blank" rel="noopener">Windows下载地址</a>，使用二台服务器作为测试。</p>
 <a id="more"></a>
-<h2 id="下载解压"><a href="#下载解压" class="headerlink" title="下载解压"></a>下载解压</h2><p>下载完成后进行解压，然后复制两份作为从成员，构成一主二从。在主服务器上使用一份，从服务器上使用二份。</p>
-<img src="/Redis%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E%E4%B8%89%E5%93%A8%E5%85%B5/2020-05-16-16-21-15.png" class>
-<img src="/Redis%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E%E4%B8%89%E5%93%A8%E5%85%B5/2020-05-16-15-44-27.png" class>
-
-<h2 id="主从配置"><a href="#主从配置" class="headerlink" title="主从配置"></a>主从配置</h2><h3 id="主redis配置"><a href="#主redis配置" class="headerlink" title="主redis配置"></a>主redis配置</h3><p>编辑文件夹下redis.windows.conf文件，设置bind和port，因为要用到远程连接，所以绑定的ip 127.0.0.1要注释掉，否则远程是无法访问的。端口就使用默认的6379，注意要把阿里云后台的端口限制防火墙打开。</p>
-<img src="/Redis%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E%E4%B8%89%E5%93%A8%E5%85%B5/2020-05-16-15-48-27.png" class>
-
-<h3 id="从redis配置"><a href="#从redis配置" class="headerlink" title="从redis配置"></a>从redis配置</h3><p>从redis配置：同样编辑文件夹下redis.windows.conf文件，设置bind和port。bind127.0.0.1同样注释掉，port分别是6380和6381。做完以上操作，如何标志这两redis是从关系呢？所以，还需要在配置文件中加上一行配置。注意：两个从redis都是相同的配置语句，因为都从属于同一个主redis。</p>
-<img src="/Redis%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E%E4%B8%89%E5%93%A8%E5%85%B5/2020-05-16-15-51-05.png" class>
-<p>由于我开启了密码登录验证，所以masterauth要添加上。</p>
+<h2 id="下载解压"><a href="#下载解压" class="headerlink" title="下载解压"></a>下载解压</h2><p>下载完成后进行解压，然后复制两份作为从成员，构成一主二从。在主服务器上使用一份，从服务器上使用二份。<br><img src="/Redis%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E%E4%B8%89%E5%93%A8%E5%85%B5/2020-05-16-16-21-15.png" class><br><img src="/Redis%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E%E4%B8%89%E5%93%A8%E5%85%B5/2020-05-16-15-44-27.png" class></p>
+<h2 id="主从配置"><a href="#主从配置" class="headerlink" title="主从配置"></a>主从配置</h2><h3 id="主redis配置"><a href="#主redis配置" class="headerlink" title="主redis配置"></a>主redis配置</h3><p>编辑文件夹下redis.windows.conf文件，设置bind和port，因为要用到远程连接，所以绑定的ip 127.0.0.1要注释掉，否则远程是无法访问的。端口就使用默认的6379，注意要把阿里云后台的端口限制防火墙打开。<br><img src="/Redis%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E%E4%B8%89%E5%93%A8%E5%85%B5/2020-05-16-15-48-27.png" class></p>
+<h3 id="从redis配置"><a href="#从redis配置" class="headerlink" title="从redis配置"></a>从redis配置</h3><p>从redis配置：同样编辑文件夹下redis.windows.conf文件，设置bind和port。bind127.0.0.1同样注释掉，port分别是6380和6381。做完以上操作，如何标志这两redis是从关系呢？所以，还需要在配置文件中加上一行配置。注意：两个从redis都是相同的配置语句，因为都从属于同一个主redis。<br><img src="/Redis%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E%E4%B8%89%E5%93%A8%E5%85%B5/2020-05-16-15-51-05.png" class><br>由于我开启了密码登录验证，所以masterauth要添加上。</p>
 <h2 id="主从启动"><a href="#主从启动" class="headerlink" title="主从启动"></a>主从启动</h2><p>在文件加中使用cmd进入命令窗口，输入redis-server redis.windows.conf即可启动（redis-server.exe和redis.windows.conf文件在相同文件夹下），依次启动主和从redis。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server redis.windows.conf</span><br></pre></td></tr></table></figure>
-
 <img src="/Redis%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E%E4%B8%89%E5%93%A8%E5%85%B5/2020-05-16-15-53-11.png" class>
 <img src="/Redis%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E%E4%B8%89%E5%93%A8%E5%85%B5/2020-05-16-15-56-08.png" class>
-<p>通过命令查看各个redis的状态</p>
-<img src="/Redis%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E%E4%B8%89%E5%93%A8%E5%85%B5/2020-05-16-16-00-18.png" class>
-<p>slave 6380</p>
-<img src="/Redis%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E%E4%B8%89%E5%93%A8%E5%85%B5/2020-05-16-16-01-09.png" class>
-<p>slave 6381</p>
-<img src="/Redis%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E%E4%B8%89%E5%93%A8%E5%85%B5/2020-05-16-16-01-39.png" class>
-<p>当搭建好后主服务器是可读可写的，而从服务器是只读的。当主服务器宕机后，整个系统就瘫痪了，不能往从服务器写入数据，不能自动的把从服务器上升为主服务器。此时可通过哨兵模式来实现当主服务器宕机后，从服务器自动上升为主服务器。</p>
+<p>通过命令查看各个redis的状态<br><img src="/Redis%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E%E4%B8%89%E5%93%A8%E5%85%B5/2020-05-16-16-00-18.png" class><br>slave 6380<br><img src="/Redis%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E%E4%B8%89%E5%93%A8%E5%85%B5/2020-05-16-16-01-09.png" class><br>slave 6381<br><img src="/Redis%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E%E4%B8%89%E5%93%A8%E5%85%B5/2020-05-16-16-01-39.png" class><br>当搭建好后主服务器是可读可写的，而从服务器是只读的。当主服务器宕机后，整个系统就瘫痪了，不能往从服务器写入数据，不能自动的把从服务器上升为主服务器。此时可通过哨兵模式来实现当主服务器宕机后，从服务器自动上升为主服务器。</p>
 <h2 id="哨兵模式配置"><a href="#哨兵模式配置" class="headerlink" title="哨兵模式配置"></a>哨兵模式配置</h2><p>新建哨兵配置文件，分别命名为</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sentinel.conf</span><br><span class="line">sentinel2.conf</span><br><span class="line">sentinel3.conf</span><br></pre></td></tr></table></figure>
-
 <p>哨兵配置文件内容<br>sentinel.conf</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">port 27000</span><br><span class="line"><span class="meta">#</span><span class="bash">master</span></span><br><span class="line">sentinel monitor master 39.100.107.169 6379 1</span><br><span class="line">sentinel down-after-milliseconds master 5000</span><br><span class="line">sentinel auth-pass master 123</span><br><span class="line">sentinel config-epoch master 1</span><br><span class="line">sentinel leader-epoch master 1</span><br></pre></td></tr></table></figure>
-
 <p>sentinel2.conf</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">port 27002</span><br><span class="line"><span class="meta">#</span><span class="bash">slave 1</span></span><br><span class="line">sentinel monitor master 39.100.107.169 6379 1</span><br><span class="line">sentinel down-after-milliseconds master 5000</span><br><span class="line">sentinel auth-pass master 123</span><br><span class="line">sentinel config-epoch master 1</span><br><span class="line">sentinel leader-epoch master 1</span><br></pre></td></tr></table></figure>
-
 <p>sentinel3.conf</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">port 27001</span><br><span class="line"><span class="meta">#</span><span class="bash">slave 2</span></span><br><span class="line">sentinel monitor master 39.100.107.169 6379 1</span><br><span class="line">sentinel down-after-milliseconds master 5000</span><br><span class="line">sentinel auth-pass master 123</span><br><span class="line">sentinel config-epoch master 1</span><br><span class="line">sentinel leader-epoch master 1</span><br></pre></td></tr></table></figure>
-
 <p>这里需要注意的是如果redis配置种添加了密码验证，一定要在sentinel文件里添加auth-pass这个参数，不然在从机上升为主机后，其他服务器连接不了。</p>
 <p>哨兵配置文件说明</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. port :当前Sentinel服务运行的端口  </span><br><span class="line">2.sentinel monitor mymaster 39.100.107.169 6379 1:Sentinel去监视一个名为mymaster的主redis实例，这个主实例的IP地址为本机地址39.100.107.169，端口号为6379，而将这个主实例判断为失效至少需要1个 Sentinel进程的同意，只要同意Sentinel的数量不达标，自动failover就不会执行  </span><br><span class="line">3.sentinel down-after-milliseconds mymaster 5000:指定了Sentinel认为Redis实例已经失效所需的毫秒数。当 实例超过该时间没有返回PING，或者直接返回错误，那么Sentinel将这个实例标记为主观下线。只有一个 Sentinel进程将实例标记为主观下线并不一定会引起实例的自动故障迁移：只有在足够数量的Sentinel都将一个实例标记为主观下线之后，实例才会被标记为客观下线，这时自动故障迁移才会执行  </span><br><span class="line">4.sentinel parallel-syncs mymaster 1：指定了在执行故障转移时，最多可以有多少个从Redis实例在同步新的主实例，在从Redis实例较多的情况下这个数字越小，同步的时间越长，完成故障转移所需的时间就越长  </span><br><span class="line">5.sentinel failover-timeout mymaster 15000：如果在该时间（ms）内未能完成failover操作，则认为该failover失败</span><br></pre></td></tr></table></figure>
-
 <h3 id="哨兵测试"><a href="#哨兵测试" class="headerlink" title="哨兵测试"></a>哨兵测试</h3><p>启动3个哨兵</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">redis-server.exe sentinel.conf --sentinel</span><br><span class="line">redis-server.exe sentinel2.conf --sentinel</span><br><span class="line">redis-server.exe sentinel3.conf --sentinel</span><br></pre></td></tr></table></figure>
-
 <img src="/Redis%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E%E4%B8%89%E5%93%A8%E5%85%B5/2020-05-16-16-25-19.png" class>
-
 <h3 id="测试主从切换"><a href="#测试主从切换" class="headerlink" title="测试主从切换"></a>测试主从切换</h3><p>主机挂了后，从机是否能成功上位变为主机</p>
 <p>先看下当前的redis状态</p>
 <p>分别在客户端输入</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">info replication</span><br></pre></td></tr></table></figure>
-
 <img src="/Redis%E4%B8%80%E4%B8%BB%E4%BA%8C%E4%BB%8E%E4%B8%89%E5%93%A8%E5%85%B5/2020-05-16-16-14-53.png" class>
 <p>当主机挂掉后，6381这个端口成了主机，这是通过哨兵的一个投票选择选出一个从机上升为主机。如果主机下次重新连接进来，那么它也不会立即成为主机，而是变为了从机。</p>
 <h2 id="NET-Core中使用Redis集群"><a href="#NET-Core中使用Redis集群" class="headerlink" title=".NET Core中使用Redis集群"></a>.NET Core中使用Redis集群</h2><p>我们使用CSRedisCore来访问Redis，CSRedisCore是国内大牛开发的一个.net core redis 组件，源码可读性很强非常干净，几乎无任何依赖。性能相比ServiceStack.Redis和StackExchange.Redis会快10%左右，支持Redis的高级特性：订阅/发布，Pipeline，MGet/MSet，集群，分区。<br>创建一个.net core 控制台程序，然后添加nuget包</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nuget Install-Package CSRedisCore</span><br></pre></td></tr></table></figure>
-
 <p>Program.cs代码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line">using System.Threading;</span><br><span class="line"></span><br><span class="line">namespace ConsoleApp1</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            &#x2F;&#x2F;连接哨兵</span><br><span class="line">            var csredis &#x3D; new CSRedis.CSRedisClient(&quot;redis-master&quot;, new[] &#123;&quot;127.0.0.1:27000&quot; &#125;);</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F;初始化 RedisHelper</span><br><span class="line">            RedisHelper.Initialization(csredis);</span><br><span class="line"></span><br><span class="line">            while (true)</span><br><span class="line">            &#123;</span><br><span class="line">                try</span><br><span class="line">                &#123;</span><br><span class="line">                    Test();</span><br><span class="line">                &#125;</span><br><span class="line">                catch(Exception ex)</span><br><span class="line">                &#123;</span><br><span class="line">                    Console.WriteLine(ex.ToString());</span><br><span class="line">                &#125;</span><br><span class="line">                Console.ReadLine();</span><br><span class="line">            &#125;</span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        static void Test()</span><br><span class="line">        &#123;</span><br><span class="line">            RedisHelper.Set(&quot;name&quot;, &quot;祝雷&quot;);&#x2F;&#x2F;设置值。默认永不过期</span><br><span class="line">            Console.WriteLine(RedisHelper.Get&lt;String&gt;(&quot;name&quot;));</span><br><span class="line"></span><br><span class="line">            RedisHelper.Set(&quot;time&quot;, DateTime.Now, 1);</span><br><span class="line">            Console.WriteLine(RedisHelper.Get&lt;DateTime&gt;(&quot;time&quot;));</span><br><span class="line">            Console.WriteLine(RedisHelper.Get&lt;DateTime&gt;(&quot;time&quot;));</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F; 列表</span><br><span class="line">            RedisHelper.RPush(&quot;list&quot;, &quot;第一个元素&quot;);</span><br><span class="line">            RedisHelper.RPush(&quot;list&quot;, &quot;第二个元素&quot;);</span><br><span class="line">            RedisHelper.LInsertBefore(&quot;list&quot;, &quot;第二个元素&quot;, &quot;我是新插入的第二个元素！&quot;);</span><br><span class="line">            Console.WriteLine($&quot;list的长度为&#123;RedisHelper.LLen(&quot;list&quot;)&#125;&quot;);</span><br><span class="line">            Console.WriteLine($&quot;list的第二个元素为&#123;RedisHelper.LIndex(&quot;list&quot;, 1)&#125;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>模拟故障进行测试，启动程序后，杀死主Redis进程，.net core程序再次访问Redis会出现一次异常检查，然后能正常切换到新的master上。</p>
 
       
@@ -792,19 +768,19 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CSS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Matlab</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CSS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -965,5 +941,21 @@ MathJax.Hub.Queue(function() {
 
 </div>
   </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>
