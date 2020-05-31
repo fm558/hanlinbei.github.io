@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://linbei.top/JestClient%E6%93%8D%E4%BD%9CElasticSearch/</loc>
+    
+    <lastmod>2020-05-31T13:00:50.256Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://linbei.top/Cplex%E6%B1%82%E8%A7%A3%E5%99%A8/</loc>
     
     <lastmod>2020-05-29T12:44:46.702Z</lastmod>
@@ -37,14 +44,14 @@
   </url>
   
   <url>
-    <loc>https://linbei.top/photos/index.html</loc>
+    <loc>https://linbei.top/photos/videos.html</loc>
     
     <lastmod>2020-05-23T01:20:26.033Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://linbei.top/photos/videos.html</loc>
+    <loc>https://linbei.top/photos/index.html</loc>
     
     <lastmod>2020-05-23T01:20:26.033Z</lastmod>
     
