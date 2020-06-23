@@ -37,13 +37,6 @@
   </url>
   
   <url>
-    <loc>https://linbei.top/photos/videos.html</loc>
-    
-    <lastmod>2020-05-23T01:20:26.033Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://linbei.top/photos/data.json</loc>
     
     <lastmod>2020-05-23T01:20:26.033Z</lastmod>
@@ -58,6 +51,13 @@
   </url>
   
   <url>
+    <loc>https://linbei.top/photos/videos.html</loc>
+    
+    <lastmod>2020-05-23T01:20:26.033Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://linbei.top/%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</loc>
     
     <lastmod>2020-05-23T01:20:25.689Z</lastmod>
@@ -65,14 +65,14 @@
   </url>
   
   <url>
-    <loc>https://linbei.top/categories/index.html</loc>
+    <loc>https://linbei.top/archives/index.html</loc>
     
     <lastmod>2020-05-23T01:20:25.689Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://linbei.top/archives/index.html</loc>
+    <loc>https://linbei.top/categories/index.html</loc>
     
     <lastmod>2020-05-23T01:20:25.689Z</lastmod>
     
