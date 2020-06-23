@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://linbei.top/"/>
-  <updated>2020-05-31T13:03:36.715Z</updated>
+  <updated>2020-06-23T11:39:43.337Z</updated>
   <id>https://linbei.top/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>TCP拥塞控制机制</title>
+    <link href="https://linbei.top/TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E6%9C%BA%E5%88%B6/"/>
+    <id>https://linbei.top/TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E6%9C%BA%E5%88%B6/</id>
+    <published>2020-06-23T13:51:57.000Z</published>
+    <updated>2020-06-23T11:39:43.337Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="产生的原因"><a href="#产生的原因" class="headerlink" title="产生的原因"></a>产生的原因</h2><p>∑对资源的需求&gt;可用资源<br><a id="more"></a></p><blockquote><p>注意<br>单纯的增加网络资源无法解决问题<br>例如：把结点的存储空间扩大，更换更高速率的链路，提高结点处理机的运算速度，不仅不能解决问题，而且可能使网络性能更坏。<br>原因：网络拥塞是许多因素引起的，单纯的解决一个可能会使上述情况得到一些缓解，但是会把拥塞转移到其他地方。<br>扩大结点存储空间——&gt;由于输出链路的容量和处理机的速度并未提高，增大排队等待时间，超时重传，浪费资源。<br>更换更高速率的链路——&gt;可能会缓解，，有可能造成各部分不匹配。</p></blockquote><h2 id="拥塞控制的作用"><a href="#拥塞控制的作用" class="headerlink" title="拥塞控制的作用"></a>拥塞控制的作用</h2><img src="/TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E6%9C%BA%E5%88%B6/2020-06-23-19-29-01.png" class><blockquote><p>注意<br>拥塞控制与流量控制的区别<br>拥塞控制是防止过多的数据注入到网络中，可以使网络中的路由器或链路不致过载，是一个全局性的过程。<br>流量控制是点对点通信量的控制，是一个端到端的问题，主要就是抑制发送端发送数据的速率，以便接收端来得及接收.</p></blockquote><h2 id="拥塞的标志"><a href="#拥塞的标志" class="headerlink" title="拥塞的标志"></a>拥塞的标志</h2><ol><li>重传计时器超时</li><li>接收到三个重复确认</li></ol><h2 id="拥塞控制的机制"><a href="#拥塞控制的机制" class="headerlink" title="拥塞控制的机制"></a>拥塞控制的机制</h2><img src="/TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E6%9C%BA%E5%88%B6/2020-06-23-19-30-53.png" class><img src="/TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E6%9C%BA%E5%88%B6/2020-06-23-19-31-02.png" class><h2 id="慢开始与拥塞避免"><a href="#慢开始与拥塞避免" class="headerlink" title="慢开始与拥塞避免"></a>慢开始与拥塞避免</h2><h3 id="慢开始"><a href="#慢开始" class="headerlink" title="慢开始"></a>慢开始</h3><ol><li>慢开始不是指cwnd的增长速度慢（指数增长），而是指TCP开始发送设置cwnd=1。</li><li><p>思路：不要一开始就发送大量的数据，先探测一下网络的拥塞程度，也就是说由小到大逐渐增加拥塞窗口的大小。这里用报文段的个数的拥塞窗口大小举例说明慢开始算法，实时拥塞窗口大小是以字节为单位的。如下图：</p><img src="/TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E6%9C%BA%E5%88%B6/2020-06-23-19-31-53.png" class></li><li><p>为了防止cwnd增长过大引起网络拥塞，设置一个慢开始门限（ssthresh状态变量）<br>当cnwd＜ssthresh，使用慢开始算法<br>当cnwd=ssthresh，既可使用慢开始算法，也可以使用拥塞避免算法<br>当cnwd＞ssthresh，使用拥塞避免算法</p></li></ol><h3 id="拥塞避免（按线性规律增长）"><a href="#拥塞避免（按线性规律增长）" class="headerlink" title="拥塞避免（按线性规律增长）"></a>拥塞避免（按线性规律增长）</h3><ol><li>拥塞避免并非完全能够避免拥塞，是说在拥塞避免阶段将拥塞窗口控制为按线性规律增长，使网络比较不容易出现拥塞。</li><li>思路：让拥塞窗口cwnd缓慢地增大，即每经过一个往返时间RTT就把发送方的拥塞控制窗口加一。</li></ol><p>无论是在慢开始阶段还是在拥塞避免阶段，只要发送方判断网络出现拥塞（其根据就是没有收到确认，虽然没有收到确认可能是其他原因的分组丢失，但是因为无法判定，所以都当做拥塞来处理），就把慢开始门限设置为出现拥塞时的发送窗口大小的一半。然后把拥塞窗口设置为1，执行慢开始算法。<br><img src="/TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E6%9C%BA%E5%88%B6/2020-06-23-19-32-53.png" class></p><blockquote><p>加法增大与乘法减小<br>乘法减小：无论是慢开始阶段还是拥塞避免，只要出现了网络拥塞（超时），就把慢开始门限值ssthresh减半<br>加法增大：执行拥塞避免算法后，拥塞窗口线性缓慢增大，防止网络过早出现拥塞</p></blockquote><h3 id="快重传与快恢复"><a href="#快重传与快恢复" class="headerlink" title="快重传与快恢复"></a>快重传与快恢复</h3><img src="/TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E6%9C%BA%E5%88%B6/2020-06-23-19-34-09.png" class><h3 id="快重传"><a href="#快重传" class="headerlink" title="快重传"></a>快重传</h3><ol><li>快重传要求接收方在收到一个失序的报文段后就立即发出重复确认（为的是使发送方及早知道有报文段没有到达对方）而不要等到自己发送数据时捎带确认。快重传算法规定，发送方只要一连收到三个重复确认就应当立即重传对方尚未收到的报文段，而不必继续等待设置的重传计时器时间到期。<img src="/TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E6%9C%BA%E5%88%B6/2020-06-23-19-34-48.png" class></li><li>由于不需要等待设置的重传计时器到期，能尽早重传未被确认的报文段，能提高整个网络的吞吐量。</li></ol><h3 id="快恢复（与快重传配合使用）"><a href="#快恢复（与快重传配合使用）" class="headerlink" title="快恢复（与快重传配合使用）"></a>快恢复（与快重传配合使用）</h3><ol><li>采用快恢复算法时，慢开始只在TCP连接建立时和网络出现超时时才使用。</li><li>当发送方连续收到三个重复确认时，就执行“乘法减小”算法，把ssthresh门限减半。但是接下去并不执行慢开始算法。</li><li>考虑到如果网络出现拥塞的话就不会收到好几个重复的确认，所以发送方现在认为网络可能没有出现拥塞。所以此时不执行慢开始算法，而是将cwnd设置为ssthresh的大小，然后执行拥塞避免算法。</li></ol><blockquote><p>注意<br>发送方窗口的上限值=Min（接受窗口rwnd，拥塞窗口cwnd）<br>rwnd＞cwnd 接收方的接收能力限制发送方窗口的最大值<br>rwnd＜cwnd 网络的拥塞限制发送方窗口的最大值</p></blockquote><h2 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h2><p>腾讯面试题<br>TCP的拥塞控制机制是什么？请简单说说。<br>答：我们知道TCP通过一个定时器（timer）采样了RTT并计算RTO，但是，如果网络上的延时突然增加，那么，TCP对这个事做出的应对只有重传数据，然而重传会导致网络的负担更重，于是会导致更大的延迟以及更多的丢包，这就导致了恶性循环，最终形成“网络风暴” —— TCP的拥塞控制机制就是用于应对这种情况。<br>首先需要了解一个概念，为了在发送端调节所要发送的数据量，定义了一个“拥塞窗口”（Congestion Window），在发送数据时，将拥塞窗口的大小与接收端ack的窗口大小做比较，取较小者作为发送数据量的上限。<br>拥塞控制主要是四个算法：</p><ol><li>慢启动：意思是刚刚加入网络的连接，一点一点地提速，不要一上来就把路占满。<br>连接建好的开始先初始化cwnd = 1，表明可以传一个MSS大小的数据。<br>每当收到一个ACK，cwnd++; 呈线性上升<br>每当过了一个RTT，cwnd = cwnd*2; 呈指数让升<br>阈值ssthresh（slow start threshold），是一个上限，当cwnd &gt;= ssthresh时，就会进入“拥塞避免算法”</li><li>拥塞避免：当拥塞窗口 cwnd 达到一个阈值时，窗口大小不再呈指数上升，而是以线性上升，避免增长过快导致网络拥塞。<br>每当收到一个ACK，cwnd = cwnd + 1/cwnd<br>每当过了一个RTT，cwnd = cwnd + 1<br>拥塞发生：当发生丢包进行数据包重传时，表示网络已经拥塞。分两种情况进行处理：<br>等到RTO超时，重传数据包<br>sshthresh = cwnd /2<br>cwnd 重置为 1</li><li>进入慢启动过程<br>在收到3个duplicate ACK时就开启重传，而不用等到RTO超时<br>sshthresh = cwnd = cwnd /2<br>进入快速恢复算法——Fast Recovery</li><li>快速恢复：至少收到了3个Duplicated Acks，说明网络也不那么糟糕，可以快速恢复。<br>cwnd = sshthresh + 3 * MSS （3的意思是确认有3个数据包被收到了）<br>重传Duplicated ACKs指定的数据包<br>如果再收到 duplicated Acks，那么cwnd = cwnd +1<br>如果收到了新的Ack，那么，cwnd = sshthresh ，然后就进入了拥塞避免的算法了。</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;产生的原因&quot;&gt;&lt;a href=&quot;#产生的原因&quot; class=&quot;headerlink&quot; title=&quot;产生的原因&quot;&gt;&lt;/a&gt;产生的原因&lt;/h2&gt;&lt;p&gt;∑对资源的需求&amp;gt;可用资源&lt;br&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="面试" scheme="https://linbei.top/categories/%E9%9D%A2%E8%AF%95/"/>
+    
+    
+      <category term="计算机网络" scheme="https://linbei.top/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
   
   <entry>
     <title>JestClient操作ES</title>
@@ -160,9 +183,9 @@
       <category term="环境搭建" scheme="https://linbei.top/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
     
     
-      <category term="Hexo" scheme="https://linbei.top/tags/Hexo/"/>
-    
       <category term="随笔" scheme="https://linbei.top/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+      <category term="Hexo" scheme="https://linbei.top/tags/Hexo/"/>
     
       <category term="前端" scheme="https://linbei.top/tags/%E5%89%8D%E7%AB%AF/"/>
     
@@ -296,9 +319,9 @@
       <category term="环境搭建" scheme="https://linbei.top/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
     
     
-      <category term="Hexo" scheme="https://linbei.top/tags/Hexo/"/>
-    
       <category term="随笔" scheme="https://linbei.top/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+      <category term="Hexo" scheme="https://linbei.top/tags/Hexo/"/>
     
       <category term="阿里云" scheme="https://linbei.top/tags/%E9%98%BF%E9%87%8C%E4%BA%91/"/>
     
@@ -323,9 +346,9 @@
       <category term="环境搭建" scheme="https://linbei.top/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
     
     
-      <category term="Hexo" scheme="https://linbei.top/tags/Hexo/"/>
-    
       <category term="随笔" scheme="https://linbei.top/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+      <category term="Hexo" scheme="https://linbei.top/tags/Hexo/"/>
     
       <category term="阿里云" scheme="https://linbei.top/tags/%E9%98%BF%E9%87%8C%E4%BA%91/"/>
     
@@ -351,9 +374,9 @@
       <category term="环境搭建" scheme="https://linbei.top/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
     
     
-      <category term="Hexo" scheme="https://linbei.top/tags/Hexo/"/>
-    
       <category term="随笔" scheme="https://linbei.top/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+      <category term="Hexo" scheme="https://linbei.top/tags/Hexo/"/>
     
       <category term="Vscode" scheme="https://linbei.top/tags/Vscode/"/>
     
@@ -404,9 +427,9 @@
       <category term="环境搭建" scheme="https://linbei.top/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
     
     
-      <category term="Hexo" scheme="https://linbei.top/tags/Hexo/"/>
-    
       <category term="随笔" scheme="https://linbei.top/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+      <category term="Hexo" scheme="https://linbei.top/tags/Hexo/"/>
     
       <category term="阿里云" scheme="https://linbei.top/tags/%E9%98%BF%E9%87%8C%E4%BA%91/"/>
     
