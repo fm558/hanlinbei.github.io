@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://linbei.top/"/>
-  <updated>2020-06-23T12:06:39.066Z</updated>
+  <updated>2020-06-28T06:02:04.545Z</updated>
   <id>https://linbei.top/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>招银网络一面面经</title>
+    <link href="https://linbei.top/%E6%8B%9B%E9%93%B6%E7%BD%91%E7%BB%9C%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/"/>
+    <id>https://linbei.top/%E6%8B%9B%E9%93%B6%E7%BD%91%E7%BB%9C%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/</id>
+    <published>2020-06-28T03:11:57.000Z</published>
+    <updated>2020-06-28T06:02:04.545Z</updated>
+    
+    <content type="html"><![CDATA[<p>第一次的电话面试，开始的时候还是有点忐忑的，有一丝紧张感的，在端午节放假前接到了一面的邀请，然后，整个端午节假期就都在准备这个电话面试了。<br><a id="more"></a></p><h2 id="笔试"><a href="#笔试" class="headerlink" title="笔试"></a>笔试</h2><p>先来说一说笔试吧，笔试时间是6.23号，时间是2.5小时，一开始的时候有些吃惊，一般的笔试不都是2个小时的吗，好吧，当我看到题目之后大概明白了，原来最后还有一个100道题的性格测试题。笔试分为俩个部分，一部分是必做题，针对软件开发的，所有选各种语言的开发者这部分题目是一样的，发现选择题是真的难，有设计到公务员的逻辑题，有操作系统的题，有设计模式的题，有计算机网络的题，还有数学题，杂七杂八的，跟java相关的好像就基本没有。<br>然后是java的必做题，相当于三道编程题。不过它的编程题和其他的不太一样，前面俩道是编程的填空题，依照给的思路去填空，第一道就是空格替换为%20，这在剑指offer里好像就有，如果要给个白板自己写，我觉得可能还更简单点。然后第二道是一个动态代理相关的，扩展一个权限，第三道给的是一个白板，实现洗牌，后来复盘查看了一下，这和网易的一道编程题很像，不过在这上面做了一些修改。</p><h2 id="一面"><a href="#一面" class="headerlink" title="一面"></a>一面</h2><p>一面的时间给的是28/29，也没有给具体的时间，有点痛苦，不知道什么时候会来电话。结果第一天早上就来电话了，早结束比较好，反正该来的总会来，可以让一个被吊着的心放下来。</p><h3 id="第一题-问的是代理相关的，然后创建代理的三种方式"><a href="#第一题-问的是代理相关的，然后创建代理的三种方式" class="headerlink" title="第一题 问的是代理相关的，然后创建代理的三种方式"></a>第一题 问的是代理相关的，然后创建代理的三种方式</h3><p>一上来有点懵，这题答得不怎么样，自己平时也没注意这方面的知识，答了JDK代理和CGlib代理相关的东西，感觉是答偏了。<br>Java的反射机制是指在运行状态中，对于任意一个类都能知道这个类所有的属性和方法，并且对于任意一个对象，都能调用它的任意一个方法。<br>获取Class对象的3种方法</p><ol><li>调用某个对象的getClass()方法</li></ol><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Person p=<span class="keyword">new</span> Person();</span><br><span class="line">Class clazz=p.getClass();</span><br></pre></td></tr></table></figure><ol><li>调用某个类的class属性来获取该类对应的class对象</li></ol><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class clazz=Person<span class="class">.<span class="keyword">class</span></span>;</span><br></pre></td></tr></table></figure><ol><li>使用Class类种的forName()静态方法（最安全/性能最好）</li></ol><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class clazz=Class.forName(<span class="string">"类的全路径"</span>)</span><br></pre></td></tr></table></figure><h3 id="JAVA的IO模型"><a href="#JAVA的IO模型" class="headerlink" title="JAVA的IO模型"></a>JAVA的IO模型</h3><p>BIO:一个连接一个线程，客户端有连接请求时服务器端就要启动一个线程进行处理，线程开销大。<br>NIO:一个请求一个线程，但客户端发送的连接请求都会注册到多路复用器上，多路复用器轮询到连接有I/O请求时才启动一个线程进行处理。<br>AIO:一个有效请求一个线程，客户端的I/O请求都是由OS先完成了再通知服务器应用去启动线程进行处理。<br>BIO是面向流的，NIO是面向缓冲区的；BIO的各种流是阻塞的，而NIO是非阻塞的；BIO的Stream是单向的，而NIO的channel是双向的。<br>NIO的特点：事件驱动模型、单线程处理多任务、非阻塞I/O，I/O读写不再阻塞，而是返回0、基于block的传输比基于流的传输更高效、更高级的IO函数zero-copy、IO多路复用大大提高了Java网络应用的可伸缩性和实用性。基于Reactor线程模型。<br>在Reactor模式中，事件分发器等待某个事件或者可应用或个操作的状态发生，事件分发器就把这个事件传给事先注册的事件处理函数或者回调函数，由后者来做实际的读写操作。如在Reactor中实现读：注册读就绪事件和相应的事件处理器、事件分发器等待事件、事件到来，激活分发器，分发器调用事件对应的处理器、事件处理器完成实际的读操作，处理读到的数据，注册新的事件，然后返还控制权。</p><h3 id="介绍一下JAVA的锁"><a href="#介绍一下JAVA的锁" class="headerlink" title="介绍一下JAVA的锁"></a>介绍一下JAVA的锁</h3><p>乐观锁：在更新的时候会判断一下在此期间别人有没有去更新这个数据，采取在写时先读出当前版本号，然后加锁操作java中的乐观锁基本都是通过CAS操作实现的，CAS是一种更新的原子操作，比较当前值跟传入值是否一样，一样则更新，否则失败。<br>悲观锁：Synchronized<br>自旋锁：如果持有锁的线程能在很短时间内释放锁资源，那么那些等待竞争锁的线程就不需要做内核态和用户态之间的切换进入阻塞挂起状态，它们只需要等一等（自旋），等持有锁的线程释放锁后即可立即获取锁，这样就避免用户线程和内核的切换的消耗</p><h3 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h3><img src="/%E6%8B%9B%E9%93%B6%E7%BD%91%E7%BB%9C%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/2020-06-28-13-55-35.png" class><p>启动类加载器：负责加载 JAVA_HOME\lib 目录中的，或通过-Xbootclasspath参数指定路径中的，且被虚拟机认可（按文件名识别，如rt.jar）的类。<br>扩展类加载器：负责加载 JAVA_HOME\lib\ext 目录中的，或通过java.ext.dirs系统变量指定路径中的类库。<br>应用程序类加载器：负责加载用户路径（classpath）上的类库。 JVM通过双亲委派模型进行类的加载，当然我们也可以通过继承java.lang.ClassLoader实现自定义的类加载器。</p><p>双亲委派：当一个类收到了类加载请求，他首先不会尝试自己去加载这个类，而是把这个请求委派给父类去完成，每一个层次类加载器都是如此，因此所有的加载请求都应该传送到启动类加载其中，只有当父类加载器反馈自己无法完成这个请求的时候（在它的加载路径下没有找到所需加载的Class），子类加载器才会尝试自己去加载。 采用双亲委派的一个好处是比如加载位于rt.jar包中的类java.lang.Object，不管是哪个加载器加载这个类，最终都是委托给顶层的启动类加载器进行加载，这样就保证了使用不同的类加载器最终得到的都是同样一个Object对象。<br><img src="/%E6%8B%9B%E9%93%B6%E7%BD%91%E7%BB%9C%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/2020-06-28-13-57-49.png" class></p><h3 id="rabbitMQ相关问题"><a href="#rabbitMQ相关问题" class="headerlink" title="rabbitMQ相关问题"></a>rabbitMQ相关问题</h3><p>最后根据简历问了一个rabbitMQ的问题，面试官基本就是把问题抛给你，然后就是你自己在那里回答，然后他也没有深入的去抓着一些点去问。问了一个rabbit集群相关的，我说项目里mq没有用集群，然后就不问了。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;第一次的电话面试，开始的时候还是有点忐忑的，有一丝紧张感的，在端午节放假前接到了一面的邀请，然后，整个端午节假期就都在准备这个电话面试了。&lt;br&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="面试" scheme="https://linbei.top/categories/%E9%9D%A2%E8%AF%95/"/>
+    
+    
+      <category term="面经" scheme="https://linbei.top/tags/%E9%9D%A2%E7%BB%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>TCP拥塞控制机制</title>
