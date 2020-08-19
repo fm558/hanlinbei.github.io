@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://linbei.top/%E6%8B%9B%E9%93%B6%E7%BD%91%E7%BB%9C%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/2020-06-28-13-55-35.png">
 <meta property="og:image" content="https://linbei.top/%E6%8B%9B%E9%93%B6%E7%BD%91%E7%BB%9C%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/2020-06-28-13-57-49.png">
 <meta property="article:published_time" content="2020-06-28T03:11:57.000Z">
-<meta property="article:modified_time" content="2020-06-28T06:05:06.197Z">
+<meta property="article:modified_time" content="2020-07-10T03:34:17.158Z">
 <meta property="article:author" content="Mr Han">
 <meta property="article:tag" content="面经">
 <meta name="twitter:card" content="summary">
@@ -315,7 +315,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1.8k字</span>
+        <span class="post-count">2.9k字</span>
       </span>
     </span>
 
@@ -324,7 +324,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">6分</span>
+        <span class="post-count">10分</span>
       </span>
     </span>
 </div>
@@ -360,6 +360,11 @@
 <p>启动类加载器：负责加载 JAVA_HOME\lib 目录中的，或通过-Xbootclasspath参数指定路径中的，且被虚拟机认可（按文件名识别，如rt.jar）的类。<br>扩展类加载器：负责加载 JAVA_HOME\lib\ext 目录中的，或通过java.ext.dirs系统变量指定路径中的类库。<br>应用程序类加载器：负责加载用户路径（classpath）上的类库。 JVM通过双亲委派模型进行类的加载，当然我们也可以通过继承java.lang.ClassLoader实现自定义的类加载器。</p>
 <p>双亲委派：当一个类收到了类加载请求，他首先不会尝试自己去加载这个类，而是把这个请求委派给父类去完成，每一个层次类加载器都是如此，因此所有的加载请求都应该传送到启动类加载其中，只有当父类加载器反馈自己无法完成这个请求的时候（在它的加载路径下没有找到所需加载的Class），子类加载器才会尝试自己去加载。 采用双亲委派的一个好处是比如加载位于rt.jar包中的类java.lang.Object，不管是哪个加载器加载这个类，最终都是委托给顶层的启动类加载器进行加载，这样就保证了使用不同的类加载器最终得到的都是同样一个Object对象。<br><img src="/%E6%8B%9B%E9%93%B6%E7%BD%91%E7%BB%9C%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/2020-06-28-13-57-49.png" class></p>
 <h3 id="rabbitMQ相关问题"><a href="#rabbitMQ相关问题" class="headerlink" title="rabbitMQ相关问题"></a>rabbitMQ相关问题</h3><p>最后根据简历问了一个rabbitMQ的问题，面试官基本就是把问题抛给你，然后就是你自己在那里回答，然后他也没有深入的去抓着一些点去问。问了一个rabbit集群相关的，我说项目里mq没有用集群，然后就不问了。</p>
+<h2 id="二面"><a href="#二面" class="headerlink" title="二面"></a>二面</h2><p>二面的通知又是在周五收到的，不知道是不是他们工作机制的问题，好喜欢在周末前发送通知。是不想让你过周末，让你好好去复习。由于感觉自己没有准备的那么充分，原本打算最近开始写一下论文的，结果计划可能就要被搁置了。二面的时间是可以选择的，可以在周一到周五时间段内任意选择一个时间段的，每天也有三个时间段，但是先到先得，和火车票抢票一样，如果这个时间段被选满了，就不能选了。所以接到通知后要立即去选一个自己想要选择的一个时间段。我选择了最后一天的早上，只是因为自己没有准备好，要花时间准备。在准备过程中恶补知识，补的脑袋都要炸掉了，尤其看一些源码，那真的是太难了。由于面试的时间是有跨度的，所以有些面试完的人会在牛客网上发面经，所以一定要去多看看，没准问到的题目是比较像的。比如手撕代码题，我就碰到了手写一个单例和快排算法，这些其实都在面经里面看到过。还有一个碰到的面试官也很重要，有些面试官比较友好，可能问的比较浅，有些问的比较深，有时候真的得看运气。看过面经普遍发现深圳和成都得难度大很多，都感觉不是一个级别，也不清楚大家是统一面试得还是分区域得。感觉二面还是心里挺紧张得，一面得时候都没有这种感觉，可能是自己准备得没有那么充分的忐忑不安吧，面试的前一个晚上感觉就是辗转难眠。我是面试自己跑回寝室了，不过设备之前一定要调试好，发现寝室里的光线还是比较暗的，辛亏室友有一个大灯泡，于是乎跑到室友的位置上准备面试了。不过我感觉笔记本自带的麦克风好像不太好用，收音效果比较差，可能是离得比较远的原因，也有可能是自己笔记本电脑太破旧的原因，所以要说话很大声才能听的比较清楚，所以打算这之后入手一个外接麦克了。视频面试用的平台是牛客网，发现现在好多公司用的都是牛客的平台。而自己平时刷题都是在力扣的平台上，所以该多刷刷牛客的题了。其实上9点钟开始的面试，我提前进房间了，可能待的时间长了，当面试官上线的时候没有感知到我在线，所以就打了个电话过来，刷新一下之后就进去了。之后就是常规的自我介绍。然后开始问项目，发现这个面试官还是主要根据项目来问，根据项目的一些知识点发起提问。技术上的点就问了get和post的区别，然后前后端交互的方式用Json，然后http的状态码，问了数据库的主从，问了redis用来干什么的，这些其实都是简历里写的项目。项目的知识完了之后就开始问一些简单的java基础，主要是JVM的知识，还有JVM调优，然后问了数据库的索引失效问题和数据库优化方面的。接着就是手撕代码了，就是一个单例模式和快排。</p>
+<p>单例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton singleton;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Sigleton <span class="title">getSingleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(singleton==<span class="keyword">null</span>)&#123;</span><br><span class="line">      <span class="keyword">synchronized</span>(Singleton<span class="class">.<span class="keyword">class</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(singleton==<span class="keyword">null</span>)&#123;</span><br><span class="line">          singleton=<span class="keyword">new</span> Singleton();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> singleton;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>快排</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[] nums=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">7</span>,<span class="number">9</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> n=nums.length;</span><br><span class="line">    quickSort(<span class="number">0</span>,n,nums);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="keyword">int</span> low,<span class="keyword">int</span> high,<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i=low;</span><br><span class="line">  <span class="keyword">int</span> j=high;</span><br><span class="line">  <span class="keyword">int</span> temp=nums[low];</span><br><span class="line">  <span class="keyword">while</span>(i!=j)&#123;</span><br><span class="line">    <span class="keyword">while</span>(j&lt;i&amp;&amp;nums[j]&gt;temp)&#123;</span><br><span class="line">      j--;</span><br><span class="line">    &#125;s</span><br><span class="line">    <span class="keyword">while</span>(i&lt;j&amp;&amp;nums[i]&lt;=temp&gt;)&#123;</span><br><span class="line">      i++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(i&lt;j)&#123;</span><br><span class="line">      <span class="keyword">int</span> t=nums[i];</span><br><span class="line">      nums[i]=nums[j];</span><br><span class="line">      nums[j]=t;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  nums[low]=nums[j];</span><br><span class="line">  nums[j]=temp;</span><br><span class="line"><span class="keyword">return</span> j;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="title">quickSort</span><span class="params">(<span class="keyword">int</span> low,<span class="keyword">int</span> high,<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">     <span class="keyword">if</span>(low&lt;high)&#123;</span><br><span class="line">       <span class="keyword">int</span> index=partition(low,high,nums);</span><br><span class="line">       partition(low,index-<span class="number">1</span>;nums);</span><br><span class="line">       partition(index+<span class="number">1</span>,high,nums);</span><br><span class="line">     &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 <!- 百度自动推送方式提交 -->
@@ -561,7 +566,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#笔试"><span class="toc-number">1.</span> <span class="toc-text">笔试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一面"><span class="toc-number">2.</span> <span class="toc-text">一面</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一题-问的是代理相关的，然后创建代理的三种方式"><span class="toc-number">2.1.</span> <span class="toc-text">第一题 问的是代理相关的，然后创建代理的三种方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA的IO模型"><span class="toc-number">2.2.</span> <span class="toc-text">JAVA的IO模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#介绍一下JAVA的锁"><span class="toc-number">2.3.</span> <span class="toc-text">介绍一下JAVA的锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#双亲委派机制"><span class="toc-number">2.4.</span> <span class="toc-text">双亲委派机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rabbitMQ相关问题"><span class="toc-number">2.5.</span> <span class="toc-text">rabbitMQ相关问题</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#笔试"><span class="toc-number">1.</span> <span class="toc-text">笔试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一面"><span class="toc-number">2.</span> <span class="toc-text">一面</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一题-问的是代理相关的，然后创建代理的三种方式"><span class="toc-number">2.1.</span> <span class="toc-text">第一题 问的是代理相关的，然后创建代理的三种方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA的IO模型"><span class="toc-number">2.2.</span> <span class="toc-text">JAVA的IO模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#介绍一下JAVA的锁"><span class="toc-number">2.3.</span> <span class="toc-text">介绍一下JAVA的锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#双亲委派机制"><span class="toc-number">2.4.</span> <span class="toc-text">双亲委派机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rabbitMQ相关问题"><span class="toc-number">2.5.</span> <span class="toc-text">rabbitMQ相关问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二面"><span class="toc-number">3.</span> <span class="toc-text">二面</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -749,6 +754,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CSS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
@@ -765,11 +778,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CSS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">阿里云</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -777,11 +786,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">阿里云</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">前端</a>
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -793,7 +798,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">SqlServer</a>
+                <a href="javascript:void(0)" class="js-tag color3">前端</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -801,19 +806,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Ngnix</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Vscode</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
+                <a href="javascript:void(0)" class="js-tag color5">SqlServer</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Vscode</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -822,6 +823,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">win</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Ngnix</a>
               </li>
             
             <div class="clearfix"></div>
