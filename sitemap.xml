@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://linbei.top/HashMap%E6%AD%BB%E5%BE%AA%E7%8E%AF/</loc>
+    
+    <lastmod>2020-11-25T06:35:28.873Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://linbei.top/%E5%A5%BD%E6%96%87%E7%AB%A0%E8%AE%B0%E5%BD%95/</loc>
+    
+    <lastmod>2020-11-25T06:34:57.448Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://linbei.top/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98/</loc>
     
     <lastmod>2020-09-18T08:57:53.746Z</lastmod>
@@ -9,21 +23,7 @@
   </url>
   
   <url>
-    <loc>https://linbei.top/%E5%A5%BD%E6%96%87%E7%AB%A0%E8%AE%B0%E5%BD%95/</loc>
-    
-    <lastmod>2020-09-18T08:57:53.730Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://linbei.top/Fast-Fail%E6%9C%BA%E5%88%B6/</loc>
-    
-    <lastmod>2020-09-18T08:57:53.714Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://linbei.top/HashMap%E6%AD%BB%E5%BE%AA%E7%8E%AF/</loc>
     
     <lastmod>2020-09-18T08:57:53.714Z</lastmod>
     
@@ -142,14 +142,14 @@
   </url>
   
   <url>
-    <loc>https://linbei.top/photos/index.html</loc>
+    <loc>https://linbei.top/photos/videos.html</loc>
     
     <lastmod>2020-05-23T01:20:26.033Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://linbei.top/photos/videos.html</loc>
+    <loc>https://linbei.top/photos/index.html</loc>
     
     <lastmod>2020-05-23T01:20:26.033Z</lastmod>
     
@@ -163,14 +163,14 @@
   </url>
   
   <url>
-    <loc>https://linbei.top/archives/index.html</loc>
+    <loc>https://linbei.top/categories/index.html</loc>
     
     <lastmod>2020-05-23T01:20:25.689Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://linbei.top/categories/index.html</loc>
+    <loc>https://linbei.top/archives/index.html</loc>
     
     <lastmod>2020-05-23T01:20:25.689Z</lastmod>
     
